@@ -2,6 +2,7 @@ export class SomeData {
   private id: string
   private required: boolean
   private number: number
+
   public constructor(props: { id: string; required: boolean; number: number }) {
     const { id, required, number } = props
     this.id = id
