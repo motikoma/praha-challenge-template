@@ -1,8 +1,23 @@
 import { createRandomIdString } from 'src/util/random'
+import { ParticipantName } from '../participantName'
+import { AbstractEntity } from 'backend/src/domain/abstractEntity'
 
 type EnrollmentStatus = 'enrolled' | 'absent' | 'seceder'
 
-export class Participant {
+type Props = {
+  id: string
+  values: ReadonlyValues
+}
+type ReadonlyProps = Readonly<Props>
+
+type Values = {
+  name: ParticipantName
+  mailAddress: MailAddress
+  enrollmentStatus: EnrollmentStatus
+}
+type ReadonlyValues = Readonly<Values>
+
+export class Participant extends AbstractEntity<ReadonlyProps> {
   private constructor(
     private readonly id: string,
     private readonly name: ParticipantName,
@@ -16,7 +31,7 @@ export class Participant {
   }
 
   static create(
-    name: string,
+    name: ParticipantName,
     mailAddress: string,
     enrollmentStatus: EnrollmentStatus,
   ) {
