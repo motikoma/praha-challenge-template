@@ -1,11 +1,11 @@
 import { uuid } from 'uuidv4'
-import { AbstractValueObject } from '../domain/abstractValueObject'
+import { ValueObject } from '../domain/valueObject'
 
 type Props = {
   id: string
 }
 
-export class UniqueID extends AbstractValueObject<Props> {
+export class UniqueID extends ValueObject<Props> {
   private constructor(props: Props) {
     super(props)
   }

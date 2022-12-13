@@ -1,11 +1,13 @@
-import { createRandomIdString } from 'src/util/random'
 import { ParticipantName } from '../participantName'
-import { AbstractEntity } from 'backend/src/domain/abstractEntity'
+import { Entity } from '../../entity'
+import { MailAddress } from '../mailAddress'
+import { UniqueID } from 'src/util/uniqueID'
+import { DomainException } from 'src/domain/DomainException'
 
 type EnrollmentStatus = 'enrolled' | 'absent' | 'seceder'
 
 type Props = {
-  id: string
+  id?: UniqueID
   values: ReadonlyValues
 }
 type ReadonlyProps = Readonly<Props>
@@ -17,29 +19,14 @@ type Values = {
 }
 type ReadonlyValues = Readonly<Values>
 
-export class Participant extends AbstractEntity<ReadonlyProps> {
-  private constructor(
-    private readonly id: string,
-    private readonly name: ParticipantName,
-    private readonly mailAddress: string,
-    private readonly enrollmentStatus: EnrollmentStatus,
-  ) {
-    this.id = id
-    this.name = name
-    this.mailAddress = mailAddress
-    this.enrollmentStatus = enrollmentStatus
+export class Participant extends Entity<ReadonlyProps> {
+  private constructor(props: ReadonlyProps) {
+    super(props)
   }
 
-  static create(
-    name: ParticipantName,
-    mailAddress: string,
-    enrollmentStatus: EnrollmentStatus,
-  ) {
-    return new Participant(
-      createRandomIdString(),
-      name,
-      mailAddress,
-      enrollmentStatus,
-    )
+  static create(props: ReadonlyProps): Participant {
+    const { id } = props
+    if (id) throw new DomainException("id can't be set")
+    return new Participant(props)
   }
 }

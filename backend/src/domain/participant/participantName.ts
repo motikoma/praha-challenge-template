@@ -1,27 +1,29 @@
-import { Result, Ok, Err } from 'src/util/result'
-import { AbstractValueObject } from '../abstractValueObject'
-import { DomainError } from '../domainError'
+import { ValueObject } from '../valueObject'
+import { DomainException } from '../domainException'
 
-interface Props {
-  name: string
+type Props = {
+  lastName: string
+  firstName: string
 }
+type ReadonlyProps = Readonly<Props>
 
-export class ParticipantName extends AbstractValueObject<Props> {
-  // vscodeで引数名インライン表示にしたとしても引数が変わった場合の型エラーを検知できない危険がある
-  // 上記の理由によりpropsで渡す
-  private constructor(props: Props) {
+export class ParticipantName extends ValueObject<ReadonlyProps> {
+  private constructor(props: ReadonlyProps) {
     super(props)
   }
 
-  // Result型を使いたいのでcreateメソッドを使用している
-  static create(props: Props): Result<ParticipantName, DomainError> {
-    if (!props.name) return new Err(new DomainError('name is required'))
-    if (props.name.length === 0)
-      return new Err(new DomainError('name is required'))
-    return new Ok(new ParticipantName(props))
+  static create(props: ReadonlyProps): ParticipantName {
+    const { lastName, firstName } = props
+    if (!lastName) throw new DomainException('名字は必須です')
+    if (lastName.length === 0)
+      throw new DomainException('名字は1文字以上で入力してください')
+    if (!firstName) throw new DomainException('名前は必須です')
+    if (firstName.length === 0)
+      throw new DomainException('名前は1文字以上で入力してください')
+    return new ParticipantName(props)
   }
 
-  get name(): string {
-    return this._value.name
+  get fullName(): string {
+    return this._value.lastName + ' ' + this._value.firstName
   }
 }
