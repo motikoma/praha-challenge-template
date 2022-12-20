@@ -7,7 +7,6 @@ import { PostSomeDataUseCase } from '../../app/sample/post-some-data-usecase'
 import { SomeDataRepository } from 'src/infra/db/repository/sample/some-data-repository'
 import { PrismaClient } from '@prisma/client'
 import { SomeDataQS } from 'src/infra/db/query-service/sample/some-data-qs'
-import { ParticipantName } from 'src/domain/participant/ParticipantName'
 
 @Controller({
   path: '/sample',
@@ -17,8 +16,6 @@ export class SampleController {
   @Get()
   @ApiResponse({ status: 200, type: GetSomeDataResponse })
   async getSomeData(): Promise<GetSomeDataResponse> {
-    const participantName = ParticipantName.create({ name: '' })
-
     const prisma = new PrismaClient()
     const qs = new SomeDataQS(prisma)
     const usecase = new GetSomeDataUseCase(qs)

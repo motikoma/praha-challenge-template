@@ -1,5 +1,5 @@
 import { ValueObject } from '../valueObject'
-import { DomainException } from '../domainException'
+import { DomainException } from '../domain-exception'
 
 type Props = {
   lastName: string
@@ -25,5 +25,13 @@ export class ParticipantName extends ValueObject<ReadonlyProps> {
 
   get fullName(): string {
     return this._value.lastName + ' ' + this._value.firstName
+  }
+
+  get lastName(): string {
+    return this._value.lastName
+  }
+
+  get firstName(): string {
+    return this._value.firstName
   }
 }

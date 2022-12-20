@@ -1,5 +1,5 @@
-import { DomainException } from '../domainException'
-import { ParticipantName } from '../participant/ParticipantName'
+import { DomainException } from '../../domain-exception'
+import { ParticipantName } from '../participant-name'
 
 describe('ParticipantName', () => {
   it('[正常系]: 正しい値を入力すると名字と名前の間に半角スペースが入る', () => {

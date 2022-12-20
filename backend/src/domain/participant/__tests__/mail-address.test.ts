@@ -1,5 +1,5 @@
-import { DomainException } from '../domainException'
-import { MailAddress } from '../participant/mailAddress'
+import { DomainException } from '../../domain-exception'
+import { MailAddress } from '../mail-address'
 
 describe('MailAddress', () => {
   it('[正常系]: 表記が正しい場合は成功', () => {

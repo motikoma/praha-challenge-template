@@ -1,5 +1,5 @@
 import { ValueObject } from '../valueObject'
-import { DomainException } from '../domainException'
+import { DomainException } from '../domain-exception'
 
 type Props = {
   mailAddress: string

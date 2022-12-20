@@ -9,7 +9,24 @@ generator client {
 }
 
 model SomeData {
-  id        String    @id
+  id       String    @id
   required Boolean
   number   Int     @db.SmallInt
+}
+
+model Participant {
+  id                  String  @id
+  lastName            String
+  firstName           String
+  enrollmentStatus    EnrollmentStatus @relation(fields: [enrollmentStatusId], references: [id])
+  enrollmentStatusId  String
+}
+model EnrollmentStatus {
+  id                  String  @id
+  status              String
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  NOT_ENROLLED
 }
